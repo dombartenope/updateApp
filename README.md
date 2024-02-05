@@ -6,6 +6,11 @@
 
 ### You should run this where you want, or have, a .env file as one is required to store your [User Authentication Key](https://documentation.onesignal.com/docs/keys-and-ids). A local input.json file is also needed in the same directory as where the command is being ran. 
 
+### When adding an App ID, you will generate a 'remove_me.txt' file. This will contain urls to each of the apps you've added yourself as an admin for. 
+
 #### There is some error checking enabled, as well as safeguards to confirm that the json file is correct before accepting an app Id to apply this change to. Customers should understand the consequences of doing this are as follows : 
  - Since the customer is uploading a JSON file that does not have a matching sender ID, this will be tied to a different FCM project. This results in new Push Tokens being generated
  - When a new token is created, there is a one hour window where FCM needs to wait before a user can begin receiving push again
+
+TODO : 
+ - Add app or org admin user input option

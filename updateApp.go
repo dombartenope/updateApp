@@ -124,6 +124,7 @@ func requestConfirmation(idConfirmation string) string {
 		log.Fatalf("App ID input error: %s", err)
 	}
 	appId = strings.TrimSpace(appId) // Trim space to handle newline and any leading/trailing whitespace
+	removeAdminPermissions(appId)
 
 	return appId
 }
@@ -173,5 +174,21 @@ func saveAuthKeyToFile(key, value string) {
 	}
 
 	fmt.Println("AUTH_KEY saved to .env file successfully")
+
+}
+
+func removeAdminPermissions(appId string) {
+	file, err := os.OpenFile("remove_me.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("No admin removal list found, generating 'remove_me.txt' in current folder")
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(fmt.Sprintf("https://dashboard.onesignal.com/apps/%s/settings/administrators\n", appId))
+	if err != nil {
+		log.Fatalf("error: %s", err)
+	}
+
+	fmt.Println("Check your remove_me.txt file at the end of the day to get the list of links to remove you from!")
 
 }
